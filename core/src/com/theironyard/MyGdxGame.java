@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	TextureRegion down, up, stand, right, left;
-	Animation walkUp, walkDown;
+
 
 	float x, y, xv, yv;
 	float time;
