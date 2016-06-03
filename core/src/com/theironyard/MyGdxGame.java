@@ -5,35 +5,33 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
-	TextureRegion down, up, stand, right;
-
-	boolean faceLeft = true;
+	TextureRegion down, up, stand, right, left;
+	Animation walkUp, walkDown;
 
 	float x, y, xv, yv;
+	float time;
 
 	static final float MAX_VELOCITY = 100;
 	static final float DECELERATION = 0.95f;
-	static final int WIDTH =  16;
-	static final int HEIGHT = 16;
-
 
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		Texture sheet = new Texture("tiles.png");
-		TextureRegion[][] tiles = TextureRegion.split(sheet, WIDTH, HEIGHT);
-		stand = tiles [6] [2];
-		down = tiles [6][0];
-		up = tiles [6][1];
-		right = tiles [6][3];
-		faceLeft = new TextureRegion(right);
-		faceLeft.flip(true, false);
+		Texture tiles = new Texture("tiles.png");
+		TextureRegion[][] grid = TextureRegion.split(tiles, 16, 16);
+		stand = grid [6] [2];
+		down = grid [6][0];
+		up = grid [6][1];
+		right = grid [6][3];
+		left = new TextureRegion(right);
+		left.flip(true, false);
 
 	}
 
@@ -44,21 +42,16 @@ public class MyGdxGame extends ApplicationAdapter {
 
 
 		TextureRegion img;
-		Gdx.gl.glClearColor(0, 0.5f, 0, 1);
+
+
+
+		Gdx.gl.glClearColor(0, 0.8f, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-
-		if (right) {
-			batch.draw(img, x, y, WIDTH * 3, HEIGHT * 3);
-		}
-		else {
-			batch.draw(img, x + WIDTH * 3, y, WIDTH * -3, HEIGHT * 3);
-
-		}
-
-		batch.draw(img, x, y, WIDTH * 3, HEIGHT * 3);
-
+		batch.draw(img, x, y, 16, 16);
 		batch.end();
+
+
 
 		move();
 	}
